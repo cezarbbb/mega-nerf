@@ -55,7 +55,6 @@ def _generate_video(hparams: Namespace) -> None:
     fps = 24
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     video_writer = cv2.VideoWriter(hparams.video_name, fourcc, fps, (745, 745))
-    # no glob, need number-index increasing
     images = glob.glob(os.path.join(images_path, '*.jpg'))
 
     for i in range(len(images)):
