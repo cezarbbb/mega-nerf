@@ -92,7 +92,7 @@ def _render_images(hparams: Namespace) -> None:
         W = int(intrinsics[i][0])
         H = int(intrinsics[i][1])
         results, rays = runner.render_image(
-            ImageMetadata(Path(''), c2ws[i], W, H, torch.FloatTensor(intrinsics[i][2:]), embeddings[i], None, False))
+            ImageMetadata(Path(''), c2ws[i], W, H, torch.FloatTensor(intrinsics[i][:]), embeddings[i], None, False))
 
         typ = 'fine' if 'rgb_fine' in results else 'coarse'
         result_rgbs = results[f'rgb_{typ}']
