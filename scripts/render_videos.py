@@ -48,13 +48,13 @@ def _write_files(hparams: Namespace) -> None:
     print('all files have been written.\n')
 
 
-def _generate_video(hparams: Namespace) -> None:
-    print('start generating video.\n')
+def _generate_video(hparams: Namespace, image_type) -> None:
+    print('start generating {} video.\n'.format(image_type))
     output = Path(hparams.output)
-    images_path = output / 'rgbs'
+    images_path = output / image_type
     fps = 24
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-    video_writer = cv2.VideoWriter(hparams.video_name, fourcc, fps, (745, 745))
+    video_writer = cv2.VideoWriter('{}_'.format(image_type) + hparams.video_name, fourcc, fps, (745, 745))
     images = glob.glob(os.path.join(images_path, '*.jpg'))
 
     for i in range(len(images)):
@@ -64,7 +64,7 @@ def _generate_video(hparams: Namespace) -> None:
         video_writer.write(frame)
 
     video_writer.release()
-    print('video has been successfully generated.\n')
+    print('{} video has been successfully generated.\n'.format(image_type))
 
 
 def main(hparams: Namespace) -> None:
@@ -78,7 +78,8 @@ def main(hparams: Namespace) -> None:
     else:
         _render_images(hparams)
 
-    _generate_video(hparams)
+    _generate_video(hparams, 'rgbs')
+    _generate_video(hparams, 'depths')
 
 
 if __name__ == '__main__':
